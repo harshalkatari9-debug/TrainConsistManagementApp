@@ -1,24 +1,29 @@
 import org.junit.jupiter.api.Test;
-import java.util.regex.*;
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TrainConsistManagementAppTest {
 
     @Test
-    void testValidFormats() {
-        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
-        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+    void testSafetyValid() {
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Box", "Coal"));
 
-        assertTrue(trainPattern.matcher("TRN-1234").matches());
-        assertTrue(cargoPattern.matcher("PET-AB").matches());
+        boolean isSafe = bogies.stream()
+                .allMatch(b -> !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
+
+        assertTrue(isSafe);
     }
 
     @Test
-    void testInvalidFormats() {
-        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
-        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+    void testSafetyInvalid() {
+        List<GoodsBogie> bogies = new ArrayList<>();
+        bogies.add(new GoodsBogie("Cylindrical", "Coal"));
 
-        assertFalse(trainPattern.matcher("TRN-12").matches());
-        assertFalse(cargoPattern.matcher("PET-abc").matches());
+        boolean isSafe = bogies.stream()
+                .allMatch(b -> !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
+
+        assertFalse(isSafe);
     }
 }
