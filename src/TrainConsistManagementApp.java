@@ -1,14 +1,23 @@
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        String[] bogieIds = {"B3", "B1", "B7", "B2", "B5"};
-        String searchKey = "B2";
+        String[] bogieIds = {"B1", "B2", "B3", "B5", "B7"};
+        String key = "B5";
 
+        int low = 0;
+        int high = bogieIds.length - 1;
         boolean found = false;
 
-        for (String id : bogieIds) {
-            if (id.equals(searchKey)) {
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int cmp = key.compareTo(bogieIds[mid]);
+
+            if (cmp == 0) {
                 found = true;
                 break;
+            } else if (cmp > 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
 
