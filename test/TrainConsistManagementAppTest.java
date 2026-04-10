@@ -1,22 +1,15 @@
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TrainConsistManagementAppTest {
 
     @Test
-    void testBubbleSort() {
-        int[] capacities = {72, 78, 24, 50, 60};
+    void testArraySort() {
+        String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "Cargo", "Guard"};
 
-        for (int i = 0; i < capacities.length - 1; i++) {
-            for (int j = 0; j < capacities.length - i - 1; j++) {
-                if (capacities[j] > capacities[j + 1]) {
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
+        Arrays.sort(bogieTypes);
 
-        assertArrayEquals(new int[]{24, 50, 60, 72, 78}, capacities);
+        assertArrayEquals(new String[]{"AC Chair", "Cargo", "First Class", "Guard", "Sleeper"}, bogieTypes);
     }
 }
