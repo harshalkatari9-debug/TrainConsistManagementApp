@@ -4,15 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TrainConsistManagementAppTest {
 
     @Test
-    void testValidCapacity() throws InvalidCapacityException {
-        Bogie b = new Bogie("Sleeper", 72);
-        assertEquals(72, b.capacity);
+    void testUnsafeCargoHandled() {
+        GoodsBogie bogie = new GoodsBogie("Rectangular");
+        bogie.assignCargo("Petroleum");
+        assertNull(bogie.cargo);
     }
 
     @Test
-    void testInvalidCapacity() {
-        assertThrows(InvalidCapacityException.class, () -> {
-            new Bogie("AC Chair", -5);
-        });
+    void testSafeCargoAssignment() {
+        GoodsBogie bogie = new GoodsBogie("Cylindrical");
+        bogie.assignCargo("Petroleum");
+        assertEquals("Petroleum", bogie.cargo);
     }
 }
