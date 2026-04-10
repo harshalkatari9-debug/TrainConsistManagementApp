@@ -1,23 +1,20 @@
+import java.util.*;
+
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        String[] bogieIds = {"B1", "B2", "B3", "B5", "B7"};
-        String key = "B5";
+        List<String> bogies = new ArrayList<>();
+        String searchKey = "B1";
 
-        int low = 0;
-        int high = bogieIds.length - 1;
+        if (bogies.isEmpty()) {
+            throw new IllegalStateException("Cannot perform search: Train has no bogies");
+        }
+
         boolean found = false;
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            int cmp = key.compareTo(bogieIds[mid]);
-
-            if (cmp == 0) {
+        for (String b : bogies) {
+            if (b.equals(searchKey)) {
                 found = true;
                 break;
-            } else if (cmp > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
 

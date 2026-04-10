@@ -1,57 +1,38 @@
 import org.junit.jupiter.api.Test;
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TrainConsistManagementAppTest {
 
     @Test
-    void testBinarySearchFound() {
-        String[] bogieIds = {"B1", "B2", "B3", "B5", "B7"};
-        String key = "B5";
+    void testEmptyCollectionThrowsException() {
+        List<String> bogies = new ArrayList<>();
 
-        int low = 0;
-        int high = bogieIds.length - 1;
+        assertThrows(IllegalStateException.class, () -> {
+            if (bogies.isEmpty()) {
+                throw new IllegalStateException("Cannot perform search: Train has no bogies");
+            }
+        });
+    }
+
+    @Test
+    void testSearchWhenDataExists() {
+        List<String> bogies = Arrays.asList("B1", "B2", "B3");
+        String key = "B2";
+
         boolean found = false;
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            int cmp = key.compareTo(bogieIds[mid]);
+        if (bogies.isEmpty()) {
+            throw new IllegalStateException();
+        }
 
-            if (cmp == 0) {
+        for (String b : bogies) {
+            if (b.equals(key)) {
                 found = true;
                 break;
-            } else if (cmp > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
 
         assertTrue(found);
-    }
-
-    @Test
-    void testBinarySearchNotFound() {
-        String[] bogieIds = {"B1", "B2", "B3", "B5", "B7"};
-        String key = "B9";
-
-        int low = 0;
-        int high = bogieIds.length - 1;
-        boolean found = false;
-
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            int cmp = key.compareTo(bogieIds[mid]);
-
-            if (cmp == 0) {
-                found = true;
-                break;
-            } else if (cmp > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-
-        assertFalse(found);
     }
 }
