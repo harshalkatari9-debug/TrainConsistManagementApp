@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.*;
 
 class Bogie {
     String name;
@@ -9,10 +8,6 @@ class Bogie {
     Bogie(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
-    }
-
-    public String toString() {
-        return name + " : " + capacity;
     }
 }
 
@@ -24,10 +19,10 @@ public class TrainConsistManagementApp {
         bogies.add(new Bogie("AC Chair", 78));
         bogies.add(new Bogie("First Class", 24));
 
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        int total = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
 
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        System.out.println(total);
     }
 }
