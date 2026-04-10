@@ -1,21 +1,24 @@
 import org.junit.jupiter.api.Test;
-import java.util.*;
+import java.util.regex.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TrainConsistManagementAppTest {
 
     @Test
-    void testTotalCapacity() {
-        List<Bogie> bogies = new ArrayList<>();
+    void testValidFormats() {
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 78));
-        bogies.add(new Bogie("First Class", 24));
+        assertTrue(trainPattern.matcher("TRN-1234").matches());
+        assertTrue(cargoPattern.matcher("PET-AB").matches());
+    }
 
-        int total = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+    @Test
+    void testInvalidFormats() {
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
-        assertEquals(174, total);
+        assertFalse(trainPattern.matcher("TRN-12").matches());
+        assertFalse(cargoPattern.matcher("PET-abc").matches());
     }
 }
